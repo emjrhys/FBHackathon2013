@@ -41,8 +41,8 @@ void GameTree::buildTree(GameTreeNode * subRoot) {
 	for (int i = 0; i < 9; i++) {
 		if (subRoot->spaces[i] == 0) {
 			int arr[9];
-			for (int i = 0; i < 9; i++) {
-				arr[i] = subRoot->spaces[i];
+			for (int j = 0; j < 9; j++) {
+				arr[j] = subRoot->spaces[j];
 			}
 
 			arr[i] = ((subRoot->playerTurn)%2)+1;
