@@ -1,28 +1,41 @@
 #ifndef GAMETREE_H
 #define GAMETREE_H
 
-#include "board.h"
 #include <vector>
 
 class GameTree {
 	public:
 		GameTree();
-		
+		void move(int space, int player);
 
-	private:
-		void buildTree();
 		class GameTreeNode {
 			public:
-				GameTreeNode(int arr[], int playerTurn);
-				vector<GameTreeNode *> children;
+				GameTreeNode(int arr[], int turn, int m);
+				std::vector<GameTreeNode *> children;
 
-			private:
+				int hasWinner();
+				bool isFull();
+
+				void printBoard();
+
 				int spaces[9];
 				int winner;
 				int playerTurn;
+				int move;
+				int score;
 		};
-
 		GameTreeNode * root;
+
+		void printTree();
+		void printTree(GameTreeNode * subRoot);
+		
+
+	private:
+
+		void buildTree();
+		void buildTree(GameTreeNode * subRoot);
+
+		
 };
 
 #endif

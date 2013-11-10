@@ -32,6 +32,7 @@ void Board::findWinner() {
 
 void Board::move(int space, int player) {
 	spaces[space] = player;
+	gt.move(space, player);
 	if (winner == 0) findWinner();
 }
 

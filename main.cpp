@@ -6,11 +6,11 @@
 
 using namespace std;
 
-int main(int argc, char ** argv) {
+int main(int argc, char ** argv) { /*
 	GameManager * game;
-	bool usingAI = (argc > 1 && argv[1][0] == 'a' && argv[1][1] == 'i');
+	bool usingAI = (argc > 1 && argv[1][0] == 'a' && argv[1][1] == 'i' && (argv[1][2] == '1' || argv[1][2] == '2'));
 	if (usingAI) {
-		ComputerPlayer * ai = new ComputerPlayer();
+		ComputerPlayer * ai = new ComputerPlayer(argv[1][2]);
 		game = new GameManager(ai);
 		cout << "Playing with an AI" << endl;
 	}
@@ -27,5 +27,7 @@ int main(int argc, char ** argv) {
 	}
 	while (game->isRunning()) {
 		game->iterateGame();
-	}
+	}*/
+	Board b;
+	//b.gt.printTree();
 }

@@ -1,6 +1,8 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "gametree.h"
+
 class Board {
 	public:
 		/**
@@ -28,6 +30,8 @@ class Board {
 		 * Checks if the board is full.
 		 */
 		bool isFull();
+
+		GameTree gt;
 
 	private:
 		/**

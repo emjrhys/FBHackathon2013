@@ -14,11 +14,11 @@ gamemanager.o : gamemanager.cpp gamemanager.h gametree.h board.h computerplayer.
 computerplayer.o : computerplayer.cpp computerplayer.h board.h gametree.h
 	$(COMPILER) $(COMPILER_FLAGS) computerplayer.cpp
 
-gametree.o : gametree.cpp gametree.h board.h
-	$(COMPILER) $(COMPILER_FLAGS) gametree.cpp
-
-board.o : board.cpp board.h
+board.o : board.cpp board.h gametree.h
 	$(COMPILER) $(COMPILER_FLAGS) board.cpp
+
+gametree.o : gametree.cpp gametree.h
+	$(COMPILER) $(COMPILER_FLAGS) gametree.cpp
 
 clean :
 	-rm -f *.o runGame

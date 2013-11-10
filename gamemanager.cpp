@@ -183,14 +183,21 @@ void GameManager::printKey() {
 }
 
 void GameManager::iterateGame() {
-	if (nextBoard == 0) {
+	if (nextBoard == 0 && (!usingAI || playerTurn == 1)) {
 		printKey();
 		printGame();
 		int next = 10;
-		while (next > 9 || next < 1) {
+		while (next > 9 || next < 1 || boards[next-1].isFull()) {
 			cout << "Player " << playerTurn << ": Choose a board to play on (1-9): ";
 			cin >> next;
 		}
+		nextBoard = next;
+	}
+	else if (nextBoard == 0) {
+		cout << "Computer's turn to pick a board.";
+		int next = ai->pickBoard(boards);
+		next += 1;
+		cout << "Computer picked " << next << "." << endl;
 		nextBoard = next;
 	}
 
@@ -211,7 +218,7 @@ void GameManager::iterateGame() {
 		}
 	}
 	else {
-		cout << "Computer's turn" << endl;
+		cout << "Computer's turn." << endl;
 		space = ai->takeTurn(boards, nextBoard-1);
 		cout << "Computer went in " << space+1 << "." << endl;
 		space+=1;
