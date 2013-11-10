@@ -2,13 +2,15 @@
 #define GAMEMANAGER_H
 
 #include "board.h"
+#include "computerplayer.h"
 
 #include <iostream>
 
 class GameManager {
 	public:
-		void iterateGame();
 		GameManager();
+		GameManager(ComputerPlayer * comp);
+		void iterateGame();
 		bool isRunning();
 		bool hasWinner();
 		void findWinner();
@@ -17,11 +19,13 @@ class GameManager {
 
 	private:
 		int playerTurn;
-		int turnCount;
 		int nextBoard;
 		Board boards[9];
 		bool gameRunning;
 		int winner;
+		bool usingAI;
+
+		ComputerPlayer * ai;
 
 };
 
