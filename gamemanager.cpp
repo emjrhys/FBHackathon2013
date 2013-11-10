@@ -5,8 +5,7 @@ using namespace std;
 
 GameManager::GameManager() {
 	playerTurn = 1;
-	boards[4].move(4, 2);
-	nextBoard = 5;
+	nextBoard = 0;
 	gameRunning = true;
 	winner = 0;
 	ai = NULL;
@@ -15,8 +14,7 @@ GameManager::GameManager() {
 
 GameManager::GameManager(ComputerPlayer * comp) {
 	playerTurn = 1;
-	boards[4].move(4, 2);
-	nextBoard = 5;
+	nextBoard = 0;
 	gameRunning = true;
 	winner = 0;
 	ai = comp;
@@ -33,7 +31,8 @@ bool GameManager::isRunning() {
 bool GameManager::hasWinner() {
 	findWinner();
 	if (winner != 0) {
-		cout << "Player " << winner << " wins!" << cout;
+		printGame();
+		cout << "Player " << winner << " wins!" << endl;
 		return true;
 	}
 	else return false;
@@ -61,10 +60,11 @@ void GameManager::findWinner() {
 void GameManager::printGame() {
 	cout << endl;
 
-	string midLine = "-+-+- \033[1;31m|\033[0m -+-+- \033[1;31m|\033[0m -+-+-";
-	string midLineLeft = "-+-+- \033[1;31m|\033[0m -+-+- \033[1;31m|\033[0m -+-+-";
-	string midLineMid = "-+-+- \033[1;31m|\033[0m -+-+- \033[1;31m|\033[0m -+-+-";
-	string midLineRight = "-+-+- \033[1;31m|\033[0m -+-+- \033[1;31m|\033[0m -+-+-";
+	string midLinePlain = "-+-+-";
+	string midLineDivider = " \033[1;31m|\033[0m ";
+
+	string midLineP1 = "\033[1;36m-+-+-\033[0m";
+	string midLineP2 = "\033[1;35m-+-+-\033[0m";
 
 	string blankLine = "\033[1;31m      |       |      \033[0m";
 	string line = "\033[1;31m------+-------+------\033[0m";
@@ -75,7 +75,10 @@ void GameManager::printGame() {
 			arr[i][j] = boards[(6+(j/3)-(i/3*3))].getSpace(6+(j%3)-((i%3)*3));
 			if (arr[i][j] == 0) {
 				if (nextBoard-1 == (6+(j/3)-(i/3*3))) {
-					cout << "\033[1;36m";
+					if (playerTurn == 1)
+						cout << "\033[1;36m";
+					else
+						cout << "\033[1;35m";
 					cout << (6+(j%3)-((i%3)*3))+1;
 					cout << "\033[0m";
 				}
@@ -85,10 +88,15 @@ void GameManager::printGame() {
 			else if (arr[i][j] == 2) cout << "O";
 
 			if (j == 2 || j == 5) {
+				
 				cout << " \033[1;31m|\033[0m ";
 			}
 			else if (j != 8) {
-				cout << "|";
+				if (boards[(6+(j/3)-(i/3*3))].hasWinner() == 1)
+					cout << "\033[1;36m";
+				else if (boards[(6+(j/3)-(i/3*3))].hasWinner() == 2)
+					cout << "\033[1;35m";
+				cout << "|\033[0m";
 			}
 		}
 		cout << endl;
@@ -100,50 +108,74 @@ void GameManager::printGame() {
 		}
 		else if (i != 8) {
 			if (i/3 == 0) {
-				if (nextBoard == 7) {
-					cout << midLineLeft << endl;
-				}
-				else if (nextBoard == 8) {
-					cout << midLineMid << endl;
-				}
-				else if (nextBoard == 9) {
-					cout << midLineRight << endl;
-				}
-				else 
-					cout << midLine << endl;
+				if (boards[6].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[6].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << midLineDivider;
+				if (boards[7].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[7].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << midLineDivider;
+				if (boards[8].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[8].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << endl;
 			}
 			else if (i/3 == 1) {
-				if (nextBoard == 4) {
-					cout << midLineLeft << endl;
-				}
-				else if (nextBoard == 5) {
-					cout << midLineMid << endl;
-				}
-				else if (nextBoard == 6) {
-					cout << midLineRight << endl;
-				}
-				else 
-					cout << midLine << endl;
+				if (boards[3].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[3].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << midLineDivider;
+				if (boards[4].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[4].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << midLineDivider;
+				if (boards[5].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[5].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << endl;
 			}
 			else if (i/3 == 2) {
-				if (nextBoard == 1) {
-					cout << midLineLeft << endl;
-				}
-				else if (nextBoard == 2) {
-					cout << midLineMid << endl;
-				}
-				else if (nextBoard == 3) {
-					cout << midLineRight << endl;
-				}
-				else 
-					cout << midLine << endl;
+				if (boards[0].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[0].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << midLineDivider;
+				if (boards[1].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[1].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << midLineDivider;
+				if (boards[2].hasWinner() == 1)
+					cout << midLineP1;
+				else if (boards[2].hasWinner() == 2)
+					cout << midLineP2;
+				else cout << midLinePlain;
+				cout << endl;
 			}
 		}
 	}	
+	cout << endl;
 }
 
 void GameManager::printKey() {
-	cout << "\033[1;36m";
+	if (playerTurn == 1)
+		cout << "\033[1;36m";
+	else cout << "\033[1;35m";
 	cout << endl << "7|8|9" << endl << "-+-+-" << 
 	endl << "4|5|6" << endl << "-+-+-" <<
 	endl << "1|2|3" << endl << endl;
@@ -151,22 +183,23 @@ void GameManager::printKey() {
 }
 
 void GameManager::iterateGame() {
-	if (usingAI == false || playerTurn == 1) printKey();
-	
 	if (nextBoard == 0) {
+		printKey();
+		printGame();
 		int next = 10;
 		while (next > 9 || next < 1) {
-			cout << "Player " << playerTurn << ": Choose a board to start on (1-9): ";
+			cout << "Player " << playerTurn << ": Choose a board to play on (1-9): ";
 			cin >> next;
 		}
 		nextBoard = next;
 	}
+
 	int space;
-	if (usingAI == false || playerTurn == 1) {
+	if (!usingAI || playerTurn == 1) {
 		printGame();
 
 		space = 10;
-		cout << endl << "Player " << playerTurn << "'s Turn!" << endl; 
+		cout << "Player " << playerTurn << "'s Turn!" << endl; 
 		cout << "You are playing on board " << nextBoard << "." << endl;
 		while (space > 9 || space < 1) {
 			cout << "Choose a space to play on (1-9): ";
@@ -184,8 +217,9 @@ void GameManager::iterateGame() {
 		space+=1;
 	}
 	boards[nextBoard-1].move(space-1, playerTurn);
-	if (!boards[space-1].isFull()) 
-		nextBoard = space;
+	if (boards[space-1].isFull()) 
+		nextBoard = 0;
+	else nextBoard = space;
 	playerTurn = (playerTurn%2)+1;
 }
 
