@@ -1,17 +1,27 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
+#include "board.h"
+
+#include <iostream>
+
 class GameManager {
 	public:
-		void IterateGame();
+		void iterateGame();
 		GameManager();
 		bool isRunning();
+		bool hasWinner();
+		void findWinner();
+		void printGame();
+		void printKey();
+
 	private:
-		int playerTurn = 1;
-		int turnCount = 1;
-		int nextBoard = 0;
+		int playerTurn;
+		int turnCount;
+		int nextBoard;
 		Board boards[9];
-		bool gameRunning = true;
+		bool gameRunning;
+		int winner;
 
 };
 
